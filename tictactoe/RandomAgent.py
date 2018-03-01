@@ -1,7 +1,7 @@
 import random
 from Const import Const
 from Move import Move
-from Game import Game
+
 
 class RandomAgent:
     def __init__(self):
@@ -20,6 +20,9 @@ class RandomAgent:
         for row in range(Const.ROWS):
             for col in range(Const.COLS):
                 if board[row][col] == Const.MARK_NONE:
-                    playable.append([row,col])
-        spot=random.randint(0,len(playable)-1)
-        return Move(playable[spot][0],playable[spot][1],mark)
+                    playable.append([row, col])
+        while playable.size > 1:  # Should play as close to middle as possible.
+            playable.remove(max(playable))  # Remove the max from the array
+            playable.remove(min(playable))  # Remove the min from the array
+        spot = random.randint(0, len(playable)-1)
+        return Move(playable[spot][0], playable[spot][1], mark)
